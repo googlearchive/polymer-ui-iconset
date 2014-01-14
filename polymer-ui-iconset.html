@@ -43,6 +43,11 @@ license that can be found in the LICENSE file.
       offsety: 0,
       type: 'iconset',
       ready: function() {
+        // TODO(sorvell): ensure iconset's src is always relative to the main
+        // document; remove useNative when code paths are unified.
+        if (HTMLImports.useNative && this.src && (this.ownerDocument !== document)) {
+          this.src = this.resolvePath(this.src, this.ownerDocument.baseURI);
+        }
         this.super();
         this.iconsChanged();
         this.updateThemes();
